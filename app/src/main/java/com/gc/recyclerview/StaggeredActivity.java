@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,19 @@ public class StaggeredActivity extends AppCompatActivity {
 
 //        //设置RecyclerView的Item间的分割线
 //        rv_recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+
+
+        myAdapter.setOnClickListener(new StaggeredAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(StaggeredActivity.this,"点击" + mDatas.get(position),Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(StaggeredActivity.this,"长按" + mDatas.get(position),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initDatas() {

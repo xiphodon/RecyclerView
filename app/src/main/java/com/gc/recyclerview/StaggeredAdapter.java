@@ -20,6 +20,19 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.MyVi
     private List<String> mDatas;
     private List<Integer> mHeight;
     private LayoutInflater mInflater;
+    private OnItemClickListener mOnClickListener;
+
+    public void setOnClickListener(OnItemClickListener onClickListener){
+        this.mOnClickListener = onClickListener;
+    }
+
+    public interface OnItemClickListener{
+
+        void onItemClick(View view ,int position);
+        void onItemLongClick(View view,int position);
+    }
+
+
 
     public StaggeredAdapter(Context context, List<String> datas) {
         this.context = context;
@@ -43,12 +56,35 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(StaggeredAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final StaggeredAdapter.MyViewHolder holder, final int position) {
         holder.tv_item.setText(mDatas.get(position));
 
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
         layoutParams.height = mHeight.get(position);
         holder.itemView.setLayoutParams(layoutParams);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mOnClickListener != null){
+                    //获取在布局上的位置
+                    int layoutPosition = holder.getLayoutPosition();
+                    mOnClickListener.onItemClick(holder.itemView,layoutPosition);
+                }
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(mOnClickListener != null){
+                    //获取在布局上的位置
+                    int layoutPosition = holder.getLayoutPosition();
+                    mOnClickListener.onItemLongClick(holder.itemView,layoutPosition);
+                }
+                return false;
+            }
+        });
     }
 
 
