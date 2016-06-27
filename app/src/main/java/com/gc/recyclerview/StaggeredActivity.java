@@ -1,25 +1,22 @@
 package com.gc.recyclerview;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class StaggeredActivity extends AppCompatActivity {
 
     private ArrayList<String> mDatas;
     private RecyclerView rv_recyclerView;
-    private MyAdapter myAdapter;
+    private StaggeredAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +26,14 @@ public class MainActivity extends AppCompatActivity {
         initDatas();
         initViews();
 
-        myAdapter = new MyAdapter(this, mDatas);
+        myAdapter = new StaggeredAdapter(this, mDatas);
         rv_recyclerView.setAdapter(myAdapter);
 
         //设置RecyclerView的布局管理
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rv_recyclerView.setLayoutManager(linearLayoutManager);
+        rv_recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
 
         //设置添加删除动画
         rv_recyclerView.setItemAnimator(new DefaultItemAnimator());
-
 
 //        //设置RecyclerView的Item间的分割线
 //        rv_recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
@@ -73,18 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_del:
                 myAdapter.deleteData(1);
-                break;
-            case R.id.action_listview:
-                rv_recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-                break;
-            case R.id.action_gridview:
-                rv_recyclerView.setLayoutManager(new GridLayoutManager(this,3));
-                break;
-            case R.id.action_hor_gridview:
-                rv_recyclerView.setLayoutManager(new StaggeredGridLayoutManager(5,StaggeredGridLayoutManager.HORIZONTAL));
-                break;
-            case R.id.action_staggered:
-                startActivity(new Intent(this,StaggeredActivity.class));
                 break;
         }
 

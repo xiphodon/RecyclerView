@@ -7,25 +7,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 适配器
  */
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.MyViewHolder> {
 
     private Context context;
     private List<String> mDatas;
+    private List<Integer> mHeight;
     private LayoutInflater mInflater;
 
-    public MyAdapter(Context context,List<String> datas) {
+    public StaggeredAdapter(Context context, List<String> datas) {
         this.context = context;
         this.mDatas = datas;
         mInflater = LayoutInflater.from(context);
+
+        mHeight = new ArrayList<>();
+        for(int i = 0 ; i < mDatas.size() ; i++){
+            mHeight.add((int) (100 + Math.random() * 300));
+        }
     }
 
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StaggeredAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = mInflater.inflate(R.layout.item_textview, parent, false);
 
@@ -35,8 +43,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MyAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(StaggeredAdapter.MyViewHolder holder, int position) {
         holder.tv_item.setText(mDatas.get(position));
+
+        ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+        layoutParams.height = mHeight.get(position);
+        holder.itemView.setLayoutParams(layoutParams);
     }
 
 
@@ -54,6 +66,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         mDatas.remove(position);
         notifyItemRemoved(position);
     }
+
+
+
 
     class MyViewHolder extends RecyclerView.ViewHolder{
 

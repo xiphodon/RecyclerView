@@ -3,6 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_add"
+        android:orderInCategory="100"
+        android:title="add"
+        android:icon="@drawable/ic_menu_add"
+        app:showAsAction="ifRoom"></item>
+
+    <item
+        android:id="@+id/action_del"
+        android:orderInCategory="100"
+        android:title="del"
+        android:icon="@drawable/ic_menu_delete"
+        app:showAsAction="ifRoom"></item>
+
+    <item
         android:id="@+id/action_listview"
         android:orderInCategory="100"
         android:title="ListView"
