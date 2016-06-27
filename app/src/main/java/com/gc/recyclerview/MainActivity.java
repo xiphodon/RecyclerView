@@ -25,8 +25,12 @@ public class MainActivity extends AppCompatActivity {
         MyAdapter myAdapter = new MyAdapter(this, mDatas);
         rv_recyclerView.setAdapter(myAdapter);
 
+        //设置RecyclerView的布局管理
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rv_recyclerView.setLayoutManager(linearLayoutManager);
+
+        //设置RecyclerView的Item间的分割线
+        rv_recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
     }
 
     private void initDatas() {
